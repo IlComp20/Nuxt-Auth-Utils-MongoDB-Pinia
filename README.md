@@ -5,6 +5,7 @@
 To run code create .env with this variable:
 
 NUXT_SESSION_PASSWORD=
+
 MONGODB_URI=
 
 ## Help
