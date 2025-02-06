@@ -24,7 +24,10 @@ watch(loggedIn, (newValue) => {
 </script>
 
 <template>
-    <h1>Welcome {{ email }}</h1>
-    <p>Logged in since {{ session.loggedInAt }}</p>
-    <UButton @click="() => { clear(); userStore.logout(); }">Logout</UButton>
+    <div class="flex flex-col text-center w-full items-center justify-center">
+        <h1>Welcome {{ email }}</h1>
+        <p>Logged in since {{ session.loggedInAt }}</p>
+        <UButton @click="() => { clear(); userStore.logout(); }" class="flex justify-center w-[15rem] ">Logout
+        </UButton>
+    </div>
 </template>

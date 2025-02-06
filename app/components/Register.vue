@@ -71,11 +71,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center" @submit="onSubmit">
         <h1 class="text-2xl font-bold ">Sign Up</h1>
-        <UFormGroup label="Email" name="email" class="w-full">
+        <UFormGroup label="Email" name="email" class="w-[15rem]">
             <UInput v-model="state.email" />
         </UFormGroup>
 
-        <UFormGroup label="Password" name="password" class="w-full">
+        <UFormGroup label="Password" name="password" class="w-[15rem]">
             <UInput v-model="state.password" type="password" />
         </UFormGroup>
 

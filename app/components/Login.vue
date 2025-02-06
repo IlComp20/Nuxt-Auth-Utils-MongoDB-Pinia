@@ -14,7 +14,7 @@ const userStore = useUserStore();
 const { fetch } = useUserSession()
 
 // Import the useUserSession composable
-const { loggedIn, user, session, clear } = useUserSession()
+const { user, } = useUserSession()
 
 // Get the email of the user
 const email = user.value?.email?.toString() ?? 'Guest';
@@ -79,26 +79,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-    <div v-if="loggedIn">
-        <h1>Welcome {{ email }}</h1>
-        <p>Logged in since {{ session.loggedInAt }}</p>
-        <UButton @click="() => { clear(); userStore.logout(); }">Logout</UButton>
-    </div>
-    <div v-else>
-        <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center" @submit="onSubmit">
-            <h1 class="text-2xl font-bold ">Login</h1>
-            <UFormGroup label="Email" name="email" class="w-full">
-                <UInput v-model="state.email" />
-            </UFormGroup>
+    <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center " @submit="onSubmit">
+        <h1 class="text-2xl font-bold ">Login</h1>
+        <UFormGroup label="Email" name="email" class="w-[15rem]">
+            <UInput v-model="state.email" />
+        </UFormGroup>
 
-            <UFormGroup label="Password" name="password" class="w-full">
-                <UInput v-model="state.password" type="password" />
-            </UFormGroup>
+        <UFormGroup label="Password" name="password" class="w-[15rem]">
+            <UInput v-model="state.password" type="password" />
+        </UFormGroup>
 
-            <UButton type="submit">
-                Login
-            </UButton>
-        </UForm>
-
-    </div>
+        <UButton type="submit">
+            Login
+        </UButton>
+    </UForm>
 </template>
