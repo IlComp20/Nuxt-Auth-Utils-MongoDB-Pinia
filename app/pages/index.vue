@@ -11,14 +11,14 @@ const change = ref(false);
 </script>
 
 <template>
-  <div v-if="loggedIn">
+  <div v-if="loggedIn" class="flex flex-col text-center w-full items-center justify-center">
     <h1>Welcome to Index page</h1>
     <UButton @click="clear">Logout</UButton>
   </div>
   <div v-else class="flex flex-col items-center justify-center gap-8">
     <!-- Show Login or Register -->
     <component :is="change ? Register : Login" />
-    <p class="text-center text-sm sm:text-base">
+    <p class="text-center">
       <span v-if="change">
         Already have an account?
         <ULink @click="change = false" active-class="text-green"
