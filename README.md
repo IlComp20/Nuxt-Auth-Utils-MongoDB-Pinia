@@ -1,12 +1,13 @@
-# Nuxt Auth Utils + MongoDB + Pinia
-
 ## Setup
 
 Install with:
-npm i --force (Because module pinia persisted )
+```sh
+npm i --force #(Because module pinia persisted )
+```
 
-To run code create .env with this variable:
+To run code copy `.env.example` to  `.env` and update the values
 
-NUXT_SESSION_PASSWORD=
-
-MONGODB_URI=
+Now we can run the project by using
+```sh
+npm run dev
+```
