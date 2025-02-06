@@ -1,5 +1,3 @@
-# Nuxt Auth Utils + MongoDB + Pinia
-
 ## Setup
 
 Install with:
@@ -13,4 +11,3 @@ Now we can run the project by using
 ```sh
 npm run dev
 ```
-
