@@ -3,14 +3,10 @@
 ## Setup
 
 Install with:
-```sh
-npm i --force #(Because module pinia persisted )
-```
+npm i --force (Because module pinia persisted )
 
-To run code copy `.env.example` to  `.env` and update the values
+To run code create .env with this variable:
 
-Now we can run the project by using
-```sh
-npm run dev
-```
+NUXT_SESSION_PASSWORD=
 
+MONGODB_URI=

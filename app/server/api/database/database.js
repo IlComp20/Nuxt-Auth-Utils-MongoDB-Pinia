@@ -11,12 +11,10 @@ const connectToDatabase = async () => {
 
   // If the database connection is not cached, create a new connection
   try {
-    cachedDb = await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: process.env.MONGODB_DB,
-    });
+    cachedDb = await mongoose.connect(process.env.MONGODB_URI, {});
     return cachedDb;
   } catch (error) {
-    console.error("Error: Connection DB Failed:", {error});
+    console.error("Error: Connection DB Failed:", error);
     process.exit(1); // Exit the process if the connection fails
   }
 };
