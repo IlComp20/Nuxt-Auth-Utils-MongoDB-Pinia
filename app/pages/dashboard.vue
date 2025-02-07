@@ -26,7 +26,7 @@ watch(loggedIn, (newValue) => {
 <template>
     <div class="flex flex-col text-center w-full items-center justify-center">
         <h1>Welcome {{ email }}</h1>
-        <p>Logged in since {{ session.loggedInAt }}</p>
+        <p>Logged in since {{ new Date(session.loggedInAt).toLocaleString() }}</p>
         <UButton @click="() => { clear(); userStore.logout(); }" class="flex justify-center w-[15rem] ">Logout
         </UButton>
     </div>
