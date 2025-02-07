@@ -21,15 +21,15 @@ const change = ref(false);
     <p class="text-center">
       <span v-if="change">
         Already have an account?
-        <ULink @click="change = false" active-class="text-green"
-          inactive-class="text-green-500 dark:text-green-400 hover:text-green-700 dark:hover:text-green-200">
+        <ULink @click="change = false" active-class="text-primary"
+          inactive-class="text-primary hover:text-primary-700 dark:hover:text-primary-200">
           Login
         </ULink>
       </span>
       <span v-else>
         Don't have an account?
-        <ULink @click="change = true"
-          inactive-class="text-green-500 dark:text-green-400 hover:text-green-700 dark:hover:text-green-200">
+        <ULink @click="change = true" active-class="text-primary"
+          inactive-class="text-primary hover:text-primary-700 dark:hover:text-primary-200">
           Sign Up
         </ULink>
       </span>
