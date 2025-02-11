@@ -2,13 +2,7 @@
 export default defineNuxtConfig({
   // srcDir Because i have modified the srcDir, the path to the components directory is now src/app/components
   srcDir: "app/",
-  modules: [
-    "@nuxt/ui",
-    "nuxt-auth-utils",
-    "@vueuse/nuxt",
-    "@pinia/nuxt",
-    "pinia-plugin-persistedstate/nuxt",
-  ],
+  modules: ["@nuxt/ui", "nuxt-auth-utils", "@vueuse/nuxt", "@pinia/nuxt"],
   imports: {
     autoImport: true,
   },
