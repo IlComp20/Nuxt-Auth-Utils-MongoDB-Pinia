@@ -13,12 +13,6 @@ const userStore = useUserStore();
 // Fetch the user session
 const { fetch } = useUserSession()
 
-// Import the useUserSession composable
-const { user, } = useUserSession()
-
-// Get the email of the user
-const email = user.value?.email?.toString() ?? 'Guest';
-
 // Schema for the form
 const schema = z.object({
     email: z.string().email('Invalid email'),
