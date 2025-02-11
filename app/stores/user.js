@@ -10,8 +10,12 @@ export const useUserStore = defineStore("userStore", () => {
     sameSite: "strict", // Protection against CSRF attacks
   });
 
-  // Initialize the user state from the cookie if it exists
-  const user = ref(cookie.value || null);
+  // Initialize the user state explicitly from the cookie
+  const user = ref(null);
+
+  if (cookie.value) {
+    user.value = cookie.value; // Ensure the state is synced with the cookie on reload
+  }
 
   // Watch for changes in the user state
   watch(
