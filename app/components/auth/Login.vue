@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 import type { FormSubmitEvent } from '#ui/types'
-import { useUserStore } from '../stores/user';
+import { useUserStore } from '~/stores/user';
 
 // Use toast to show error notification
 const toast = useToast()
@@ -55,6 +55,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
         // Set the user in the store
         const { user } = useUserSession()
+        // Add user in Pinia
         userStore.setUser(user.value);
 
         // Navigate to dashboard

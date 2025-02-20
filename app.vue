@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { NuxtLayout } from '#components';
 
 </script>

@@ -9,8 +9,7 @@ const { idle } = useAuthMonitor()
     <div class="flex flex-col min-h-screen h-screen">
         <UNotifications />
         <Navbar />
-
-        <main class="flex-1 flex items-center justify-center">
+        <main class="flex-1 mt-4">
             <slot />
         </main>
 
