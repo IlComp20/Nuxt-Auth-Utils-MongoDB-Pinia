@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 import type { FormSubmitEvent } from '#ui/types'
-import { useUserStore } from '../../stores/user';
+import { useUserStore } from '~/stores/user';
 
 // Use toast to show error notification
 const toast = useToast()
@@ -12,6 +12,8 @@ const userStore = useUserStore();
 
 // Fetch the user session
 const { fetch } = useUserSession()
+
+const isLoading = ref(false);
 
 // Schema for the form
 const schema = z.object({
@@ -30,6 +32,7 @@ const state = reactive({
 
 // Handle form submission
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+    isLoading.value = true;
     try {
         const res = await $fetch('/api/auth/register', {
             method: 'POST',
@@ -51,7 +54,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             return
         }
 
+        // Set the user in the store
         const { user } = useUserSession()
+        // Add user in Pinia
         userStore.setUser(user.value)
         await navigateTo('/dashboard')
 
@@ -63,25 +68,31 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             color: 'red',
             timeout: 1500
         })
+    } finally {
+        isLoading.value = false; // Ensures loading state is reset after API call completes
     }
 }
 </script>
 
 <template>
+    <!-- loading icon -->
+    <div v-if="isLoading">
+        <Icon :name="'eos-icons:loading'" />
+    </div>
+    <div v-else="isLoading">
+        <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center" @submit="onSubmit">
+            <h1 class="text-2xl font-bold ">Sign Up</h1>
+            <UFormGroup label="Email" name="email" class="w-[15rem]">
+                <UInput v-model="state.email" />
+            </UFormGroup>
 
-    <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center" @submit="onSubmit">
-        <h1 class="text-2xl font-bold ">Sign Up</h1>
-        <UFormGroup label="Email" name="email" class="w-[15rem]">
-            <UInput v-model="state.email" />
-        </UFormGroup>
+            <UFormGroup label="Password" name="password" class="w-[15rem]">
+                <UInput v-model="state.password" type="password" />
+            </UFormGroup>
 
-        <UFormGroup label="Password" name="password" class="w-[15rem]">
-            <UInput v-model="state.password" type="password" />
-        </UFormGroup>
-
-        <UButton type="submit">
-            Sign Up
-        </UButton>
-    </UForm>
-
+            <UButton type="submit">
+                Sign Up
+            </UButton>
+        </UForm>
+    </div>
 </template>

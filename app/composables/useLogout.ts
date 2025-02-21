@@ -16,12 +16,13 @@ export function useLogout(): UseLogoutReturn {
     error.value = null;
 
     try {
+      // Clear session data
+      await clear();
       // clear store data
       userStore.logout();
-      // Clear session data
-      clear();
+
       // Navigate to login/register page
-      await navigateTo("/");
+      await navigateTo("/login");
 
       toast.add({
         title: "Logout completed successfully",

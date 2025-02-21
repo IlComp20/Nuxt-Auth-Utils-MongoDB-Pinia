@@ -13,6 +13,8 @@ const userStore = useUserStore();
 // Fetch the user session
 const { fetch } = useUserSession()
 
+const isLoading = ref(false);
+
 // Schema for the form
 const schema = z.object({
     email: z.string().email('Invalid email'),
@@ -30,6 +32,7 @@ const state = reactive({
 
 // Handle form submission
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+    isLoading.value = true;
     try {
         // Register the user
         const res = await $fetch('/api/auth/login', {
@@ -58,8 +61,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         // Add user in Pinia
         userStore.setUser(user.value);
 
-        // Navigate to dashboard
-        await navigateTo('/dashboard')
 
     } catch (error: any) {
         console.error('Login error:', error.data?.message || error.message)
@@ -69,23 +70,31 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             color: 'red',
             timeout: 1500
         })
+    } finally {
+        isLoading.value = false; // Ensures loading state is reset after API call completes
     }
 }
 </script>
 
 <template>
-    <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center " @submit="onSubmit">
-        <h1 class="text-2xl font-bold ">Login</h1>
-        <UFormGroup label="Email" name="email" class="w-[15rem]">
-            <UInput v-model="state.email" />
-        </UFormGroup>
+    <!-- loading icon -->
+    <div v-if="isLoading">
+        <Icon :name="'eos-icons:loading'" />
+    </div>
+    <div v-else="isLoading">
+        <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center " @submit="onSubmit">
+            <h1 class="text-2xl font-bold ">Login</h1>
+            <UFormGroup label="Email" name="email" class="w-[15rem]">
+                <UInput v-model="state.email" />
+            </UFormGroup>
 
-        <UFormGroup label="Password" name="password" class="w-[15rem]">
-            <UInput v-model="state.password" type="password" />
-        </UFormGroup>
+            <UFormGroup label="Password" name="password" class="w-[15rem]">
+                <UInput v-model="state.password" type="password" />
+            </UFormGroup>
 
-        <UButton type="submit">
-            Login
-        </UButton>
-    </UForm>
+            <UButton type="submit">
+                Login
+            </UButton>
+        </UForm>
+    </div>
 </template>

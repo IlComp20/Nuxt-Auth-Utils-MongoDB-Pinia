@@ -20,6 +20,8 @@ const { loggedIn, session, } = useUserSession()
         <div class="flex flex-col text-center w-full items-center justify-center">
             <h1>Welcome {{ email }}</h1>
             <p>You are logged in since {{ new Date(session.loggedInAt).toLocaleString() }}</p>
+            <p>Note</p>
+            <p>Spesa</p>
         </div>
     </div>
 

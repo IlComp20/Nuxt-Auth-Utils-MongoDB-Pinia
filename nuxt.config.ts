@@ -12,6 +12,9 @@ export default defineNuxtConfig({
   imports: {
     autoImport: true,
   },
+  routeRules: {
+    "/": { redirect: "/login" },
+  },
   components: [
     {
       path: "app/components",
