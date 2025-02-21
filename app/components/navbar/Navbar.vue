@@ -114,7 +114,7 @@ onMounted(() => {
 // Navbar links
 const horizontalLinks = computed(() => loggedIn.value ? [
     { label: "Profile", to: "/dashboard" },
-    { label: "Example", to: "" },
+    { label: "Example", to: "/example" },
     { label: "Example", to: "" },
     { label: "Example", to: "" },
     { label: "Example", to: "" },
