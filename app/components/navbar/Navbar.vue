@@ -1,20 +1,21 @@
 <template>
     <UContainer class="w-full flex items-center justify-between h-12">
         <!-- Mobile menu button (only if logged in) -->
-        <UButton v-if="loggedIn" @click="toggleMenu()" class="block md:hidden">
+        <UButton v-if="loggedIn" @click="toggleMenu()"
+            class="block md:hidden dark:bg-gray-300 dark:hover:bg-gray-100 bg-gray-400 hover:bg-gray-700">
             <Icon :name="isMenuOpen ? 'typcn:times' : 'typcn:th-menu'" class="flex items-center justify-center"
                 size="1.5em" />
         </UButton>
 
         <!-- Home link (desktop) -->
         <div class="hidden md:block">
-            <ULink to="/" class="flex items-center justify-center">
+            <ULink to="/" class="flex items-center justify-center ">
                 <Icon name="lsicon:house-outline" size="2.5em" />
             </ULink>
         </div>
 
         <!-- Horizontal navbar on desktop -->
-        <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8">
+        <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8 ">
             <UHorizontalNavigation :links="horizontalLinks" />
         </div>
 
@@ -22,7 +23,7 @@
         <div class="flex-none flex items-center gap-4 ml-auto">
             <ClientOnly>
                 <!-- Theme toggle -->
-                <UToggle v-model="isDark" on-icon="i-heroicons-moon" off-icon="i-heroicons-sun" size="lg" />
+                <UToggle v-model="isDark" size="lg" class="dark:bg-gray-400" />
 
                 <!-- Logout on desktop (only if logged in) -->
                 <p v-if="loggedIn" @click="logout"
@@ -40,7 +41,7 @@
                 <div class="w-3/4 max-w-xs h-full bg-white dark:bg-gray-900 p-6 flex flex-col items-start shadow-lg">
                     <!-- Header with email and close button -->
                     <div class="w-full flex justify-between items-center mb-4">
-                        <span class="text-sm font-light text-gray-300">{{ userEmail }}</span>
+                        <span class="text-sm font-light dark:text-gray-300 text-gray-700">{{ userEmail }}</span>
                         <Icon @click="closeMenu" name="typcn:times" size="2em" />
                     </div>
 
@@ -66,7 +67,7 @@
                 </div>
 
                 <!-- Black background (click to close) -->
-                <div class="flex-grow bg-black opacity-100" @click="closeMenu"></div>
+                <div class="flex-grow dark:bg-[#202020] bg-gray-200 opacity-100 " @click="closeMenu"></div>
             </div>
         </transition>
     </UContainer>

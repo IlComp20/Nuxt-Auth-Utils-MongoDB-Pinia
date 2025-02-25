@@ -2,13 +2,7 @@
 export default defineNuxtConfig({
   // srcDir Because i have modified the srcDir, the path to the components directory is now src/app/components
   srcDir: "app/",
-  modules: [
-    "@nuxt/ui",
-    "nuxt-auth-utils",
-    "@vueuse/nuxt",
-    "@pinia/nuxt",
-    "@nuxt/icon",
-  ],
+  modules: ["@nuxt/ui", "nuxt-auth-utils", "@vueuse/nuxt", "@pinia/nuxt", "@nuxt/icon", "@nuxt/fonts"],
   imports: {
     autoImport: true,
   },
@@ -26,6 +20,7 @@ export default defineNuxtConfig({
     fallback: "dark",
     storageKey: "nuxt-color-mode",
   },
+  css: ["~/assets/css/main.css"],
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
 });
