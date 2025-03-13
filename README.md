@@ -12,13 +12,13 @@
 
 ## ✨ Features
 
-- **🔑 Autenticazione con nuxt-auth-utils**: Implementa un login sicuro con Google utilizzando il modulo nuxt-auth-utils.
-- **🗄️ Integrazione con MongoDB**: Memorizzazione persistente dei dati utente utilizzando MongoDB.
-- **📦 Gestione dello stato con Pinia**: Gestione efficiente e tipizzata dello stato con Pinia.
-- **🧩 Nuxt UI**: Utilizzo della libreria di componenti Nuxt UI per interfacce coerenti e accattivanti.
-- **🌓 Supporto alla modalità scura**: Passaggio semplice tra temi chiari e scuri.
-- **📱 Barra di navigazione reattiva**: Una barra di navigazione pulita e reattiva per una migliore esperienza utente.
-- **🎨 Stile con Tailwind CSS**: Utilizzo di Tailwind CSS per uno sviluppo UI rapido.
+- **🔑 Authentication with nuxt-auth-utils**: Implement a secure login with Google using the nuxt-auth-utils module.
+- **🗄️ Integration with MongoDB**: Persistent user data storage using MongoDB.
+- **📦 State management with Pinia**: Efficient and strongly-typed state management with Pinia.
+- **🧩 Nuxt UI**: Use the Nuxt UI component library for consistent and visually appealing interfaces.
+- **🌓 Dark mode support**: Easily switch between light and dark themes.
+- **📱 Responsive navigation bar**: A clean and responsive navigation bar for a better user experience.
+- **🎨 Styling with Tailwind CSS**: Use Tailwind CSS for fast UI development.
 
 
 ## 🚀 Getting Started
