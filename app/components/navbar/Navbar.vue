@@ -2,11 +2,18 @@
     <UContainer
         class="w-full flex items-center justify-between h-12 rounded-sm dark:bg-navbar-dark bg-navbar-light shadow-md ">
         <div>
-            <NuxtLink to="/" prefetch class="flex items-center justify-center" aria-label="Go to homepage">
+            <NuxtLink to="/" prefetch class="flex items-center justify-center" aria-label="Vai alla home page">
                 <Icon name="i-lucide-house" size="2em" aria-hidden="true" class="transition-colors">
                 </Icon>
                 <span class="sr-only">Home</span>
             </NuxtLink>
+        </div>
+        <div v-if="!loggedIn" class="flex-col ml-auto">
+            <ClientOnly>
+                <UToggle v-model="isDark" size="sm"
+                    class="dark:bg-text-secondary-dark bg-text-secondary-light transition-colors items-center "
+                    aria-label="Attiva/disattiva modalità scura" />
+            </ClientOnly>
         </div>
 
         <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-1">
