@@ -14,8 +14,8 @@ const { idle } = useAuthMonitor()
             <slot />
         </main>
 
-        <footer class="flex w-full items-center justify-center">
-            <div>© 2025 - All rights reserved.</div>
+        <footer class="flex w-full items-center justify-center text-xs py-2">
+            <div></div>
         </footer>
     </div>
 </template>

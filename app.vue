@@ -6,7 +6,7 @@ import { NuxtLayout } from '#components';
 <template>
   <div>
     <NuxtLayout>
-      <!-- Questo componente abilita le Pages di Nuxt -->
+      <!-- This component enables Nuxt Pages -->
       <NuxtPage />
     </NuxtLayout>
   </div>

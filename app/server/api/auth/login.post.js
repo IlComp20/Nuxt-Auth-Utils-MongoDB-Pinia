@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     );
 
     // Check for existing user with the same email address in the database
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email.toLowerCase() }).lean();
 
     if (!user) {
       throw createError({
@@ -45,10 +45,8 @@ export default defineEventHandler(async (event) => {
     };
   } catch (err) {
     if (err.statusCode && err.statusMessage) {
-      // Errori previsti
       throw err;
     } else {
-      // Errori imprevisti
       console.error("Error during request:", err);
       throw createError({
         statusCode: 500,

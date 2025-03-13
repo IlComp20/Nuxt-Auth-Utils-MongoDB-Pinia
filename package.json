@@ -10,15 +10,19 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@mdi/js": "^7.4.47",
     "@nuxt/fonts": "^0.10.3",
+    "@nuxt/image": "^1.9.0",
     "@nuxt/ui": "^2.21.0",
     "@nuxtjs/color-mode": "^3.5.2",
+    "@nuxtjs/robots": "^5.2.7",
     "@pinia/nuxt": "^0.5.0",
     "@vueuse/core": "^12.5.0",
     "@vueuse/nuxt": "^12.5.0",
     "mongoose": "^8.10.0",
     "nuxt": "^3.15.4",
     "nuxt-auth-utils": "^0.5.14",
+    "nuxt-security": "^2.2.0",
     "pinia": "^2.3.1",
     "vue": "latest",
     "zod": "^3.24.1"

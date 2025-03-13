@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { loggedIn } = useUserSession();
 
   // Public routes
-  const publicRoutes = ["/login", "/"];
+  const publicRoutes = ["/login", "/", "robots.txt"];
 
   // If user is logged or is in a public routes, return
   if (loggedIn.value || publicRoutes.includes(to.path)) {

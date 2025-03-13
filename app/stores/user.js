@@ -1,27 +1,27 @@
+// stores/user.js
 import { defineStore } from "pinia";
-import { ref, watch, computed } from "vue";
-import { useCookie } from "#app"; // This is the correct import for Nuxt 3
+import { ref, watch } from "vue";
+import { useCookie } from "#app";
 
 export const useUserStore = defineStore("userStore", () => {
-  // Create a persistent cookie with some configuration options
+  // User cookie
   const cookie = useCookie("user", {
-    maxAge: 60 * 60 * 24 * 7, // Expires in 7 days
-    secure: true, // The cookie is sent only over HTTPS
-    sameSite: "strict", // Protection against CSRF attacks
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+    secure: true,
+    sameSite: "strict",
   });
 
-  // Initialize the user state explicitly from the cookie
   const user = ref(null);
 
+  // Initialize user from cookie
   if (cookie.value) {
-    user.value = cookie.value; // Ensure the state is synced with the cookie on reload
+    user.value = cookie.value;
   }
 
-  // Watch for changes in the user state
+  // Update cookie when user changes
   watch(
     user,
     (newValue) => {
-      // Update the cookie when the state changes
       cookie.value = newValue;
     },
     { deep: true }

@@ -1,6 +1,7 @@
 <script setup>
 import Register from '~/components/auth/Register.vue';
 import Login from '~/components/auth/Login.vue';
+import Google from '~/components/auth/Google.vue';
 
 definePageMeta({
     layout: 'default'
@@ -34,17 +35,19 @@ watch(loggedIn, (isIdle) => {
                 <p class="text-center">
                     <span v-if="change">
                         Already have an account?
-                        <ULink @click="change = false" active-class="text-primary"
-                            inactive-class="text-primary hover:text-yellow-700 dark:hover:text-yellow-200">
+                        <ULink @click="change = false" active-class="text-primary" inactive-class="text-primary">
                             Login
                         </ULink>
+                        <!-- Google Login -->
+                        <Google />
                     </span>
                     <span v-else>
                         Don't have an account?
-                        <ULink @click="change = true" active-class="text-primary"
-                            inactive-class="text-primary hover:text-primary-700 dark:hover:text-yellow-200">
+                        <ULink @click="change = true" active-class="text-primary" inactive-class="text-primary  ">
                             Sign Up
                         </ULink>
+                        <!-- Google Login -->
+                        <Google />
                     </span>
                 </p>
             </div>

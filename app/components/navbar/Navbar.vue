@@ -1,90 +1,52 @@
 <template>
-    <UContainer class="w-full flex items-center justify-between h-12">
-        <!-- Mobile menu button (only if logged in) -->
-        <UButton v-if="loggedIn" @click="toggleMenu()"
-            class="block md:hidden dark:bg-gray-300 dark:hover:bg-gray-100 bg-gray-400 hover:bg-gray-700">
-            <Icon :name="isMenuOpen ? 'typcn:times' : 'typcn:th-menu'" class="flex items-center justify-center"
-                size="1.5em" />
-        </UButton>
-
-        <!-- Home link (desktop) -->
-        <div class="hidden md:block">
-            <ULink to="/" class="flex items-center justify-center ">
-                <Icon name="lsicon:house-outline" size="2.5em" />
-            </ULink>
+    <UContainer
+        class="w-full flex items-center justify-between h-12 rounded-sm dark:bg-navbar-dark bg-navbar-light shadow-md ">
+        <div>
+            <NuxtLink to="/" prefetch class="flex items-center justify-center" aria-label="Go to homepage">
+                <Icon name="i-lucide-house" size="2em" aria-hidden="true" class="transition-colors">
+                </Icon>
+                <span class="sr-only">Home</span>
+            </NuxtLink>
         </div>
 
-        <!-- Horizontal navbar on desktop -->
-        <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8 ">
-            <UHorizontalNavigation :links="horizontalLinks" />
+        <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-1">
+            <NuxtLink v-for="link in horizontalLinks" :key="link.to" :to="link.to" prefetch
+                class="px-3 py-2 rounded-lg transition-colors dark:text-text-dark text-text-light dark:hover:bg-hover-dark hover:bg-hover-light">
+                {{ link.label }}
+            </NuxtLink>
         </div>
 
-        <!-- Right section (Toggle + Logout on desktop) -->
-        <div class="flex-none flex items-center gap-4 ml-auto">
-            <ClientOnly>
-                <!-- Theme toggle -->
-                <UToggle v-model="isDark" size="lg" class="dark:bg-gray-400" />
-
-                <!-- Logout on desktop (only if logged in) -->
-                <p v-if="loggedIn" @click="logout"
-                    class="hidden md:flex items-center gap-2 cursor-pointer dark:hover:bg-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg">
-                    <Icon name="hugeicons:logout-04" size="1.4em" />
-                    Logout
-                </p>
-            </ClientOnly>
+        <div class="flex-none flex items-center gap-4">
+            <UDropdown v-if="loggedIn" :items="avatarDropdownItems">
+                <UAvatar :src="userAvatar" alt="i-lucide-settings" icon="i-lucide-settings"
+                    class="cursor-pointer border" />
+                <template #toggle>
+                    <ClientOnly>
+                        <div class="flex items-center gap-2 justify-between w-full">
+                            <UToggle v-model="isDark" size="sm"
+                                class="dark:bg-text-secondary-dark bg-text-secondary-light transition-colors items-center "
+                                aria-label="Dark/Light mode" />
+                            <span class="text-sm dark:text-text-dark text-text-light">Theme</span>
+                        </div>
+                    </ClientOnly>
+                </template>
+            </UDropdown>
         </div>
-
-        <!-- Sidebar menu for mobile -->
-        <transition name="slide">
-            <div v-if="isMenuOpen" class="fixed inset-0 z-50 flex">
-                <!-- Sidebar -->
-                <div class="w-3/4 max-w-xs h-full bg-white dark:bg-gray-900 p-6 flex flex-col items-start shadow-lg">
-                    <!-- Header with email and close button -->
-                    <div class="w-full flex justify-between items-center mb-4">
-                        <span class="text-sm font-light dark:text-gray-300 text-gray-700">{{ userEmail }}</span>
-                        <Icon @click="closeMenu" name="typcn:times" size="2em" />
-                    </div>
-
-                    <!-- Menu items -->
-                    <nav class="w-full">
-                        <ul class="space-y-4">
-                            <li v-for="link in verticalLinks" :key="link.to">
-                                <ULink :to="link.to"
-                                    class="block w-full text-left text-lg px-4 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800"
-                                    @click="closeMenu">
-                                    {{ link.label }}
-                                </ULink>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <!-- Logout in mobile menu -->
-                    <div v-if="loggedIn" @click="logoutAndClose"
-                        class="mt-auto cursor-pointer flex items-center gap-2 w-full px-4 py-3 text-lg hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg justify-center">
-                        <Icon name="hugeicons:logout-04" size="1.4em" />
-                        Logout
-                    </div>
-                </div>
-
-                <!-- Black background (click to close) -->
-                <div class="flex-grow dark:bg-[#202020] bg-gray-200 opacity-100 " @click="closeMenu"></div>
-            </div>
-        </transition>
     </UContainer>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, } from 'vue'
 
 const { logout } = useLogout()
 const { loggedIn, user } = useUserSession()
 
 // User email (if logged in)
 const userEmail = computed(() => loggedIn.value ? user.value?.email || 'No email' : '')
+const userAvatar = computed(() => loggedIn.value ? user.value?.avatar || 'No Avatar' : '')
 
 // Mobile menu state
 const isMenuOpen = ref(false)
-const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value)
 const closeMenu = () => (isMenuOpen.value = false)
 
 // Logout and close menu
@@ -95,12 +57,37 @@ const logoutAndClose = () => {
 
 // Theme management
 const colorMode = useColorMode()
-const isDark = computed({
-    get() { return colorMode.value === 'dark' },
-    set() {
-        colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-        colorMode.value = colorMode.preference
-    }
+const isDark = ref(colorMode.value === 'dark')
+watch(isDark, (newValue) => {
+    colorMode.preference = newValue ? 'dark' : 'light'
+    colorMode.value = colorMode.preference
+})
+
+// Avatar Dropdown Items
+const avatarDropdownItems = computed(() => {
+    if (!loggedIn.value) return []
+
+    return [
+        [{
+            label: 'Theme',
+            slot: 'toggle'
+        }],
+        [{
+            label: 'Profile',
+            icon: 'i-lucide-user',
+            to: '/dashboard'
+        }],
+        [{
+            label: 'Settings',
+            icon: 'i-lucide-settings',
+            to: '/settings'
+        }],
+        [{
+            label: 'Logout',
+            icon: 'i-lucide-log-out',
+            click: logout
+        }]
+    ]
 })
 
 // Sync theme with system preferences
@@ -109,19 +96,22 @@ onMounted(() => {
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
         colorMode.preference = prefersDark ? 'dark' : 'light'
         colorMode.value = colorMode.preference
+        isDark.value = prefersDark
     }
 })
 
 // Navbar links
-const horizontalLinks = computed(() => loggedIn.value ? [
-    { label: "Profile", to: "/dashboard" },
-    { label: "Example", to: "/example" },
-    { label: "Example", to: "" },
-    { label: "Example", to: "" },
-    { label: "Example", to: "" },
-] : [])
+const horizontalLinks = computed(() => {
+    // Base links for logged users
+    if (!loggedIn.value) return [];
 
-const verticalLinks = computed(() => [...horizontalLinks.value])
+    let links = [
+        { label: "Profile", to: "/dashboard" },
+    ];
+
+    return links;
+});
+
 </script>
 
 <style>

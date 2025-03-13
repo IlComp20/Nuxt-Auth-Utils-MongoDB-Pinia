@@ -3,37 +3,34 @@
 import { z } from 'zod'
 import type { FormSubmitEvent } from '#ui/types'
 import { useUserStore } from '~/stores/user';
+import LoadingIcon from '../icon/LoadingIcon.vue';
 
-// Use toast to show error notification
+// Initialize services
 const toast = useToast()
-
-// Use the userStore session
 const userStore = useUserStore();
-
-// Fetch the user session
 const { fetch } = useUserSession()
-
 const isLoading = ref(false);
 
-// Schema for the form
+// Form validation schema using Zod
 const schema = z.object({
     email: z.string().email('Invalid email'),
     password: z.string().min(8, 'Must be at least 8 characters')
 })
 
-// Type of the schema
+// Type definition from schema
 type Schema = z.output<typeof schema>
 
-// Reactive state for the form
+// Form state
 const state = reactive({
     email: undefined,
     password: undefined
 })
 
-// Handle form submission
+// Handle form submission for registration
 async function onSubmit(event: FormSubmitEvent<Schema>) {
     isLoading.value = true;
     try {
+        // Send registration request
         const res = await $fetch('/api/auth/register', {
             method: 'POST',
             body: {
@@ -42,8 +39,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             }
         })
 
+        // Update session
         await fetch()
 
+        // Handle failed registration
         if (!res.success) {
             toast.add({
                 title: 'Registration Error',
@@ -54,13 +53,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             return
         }
 
-        // Set the user in the store
+        // Update store and redirect to dashboard
         const { user } = useUserSession()
-        // Add user in Pinia
         userStore.setUser(user.value)
         await navigateTo('/dashboard')
-
     } catch (error: any) {
+        // Handle API errors
         console.error('Registration error:', error.data?.message || error.message)
         toast.add({
             title: 'Error',
@@ -69,27 +67,26 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             timeout: 1500
         })
     } finally {
-        isLoading.value = false; // Ensures loading state is reset after API call completes
+        isLoading.value = false;
     }
 }
 </script>
 
 <template>
-    <!-- loading icon -->
+    <!-- Show loading spinner during registration -->
     <div v-if="isLoading">
-        <Icon :name="'eos-icons:loading'" />
+        <LoadingIcon />
     </div>
     <div v-else="isLoading">
+        <!-- Registration form -->
         <UForm :schema="schema" :state="state" class="space-y-4 flex flex-col items-center" @submit="onSubmit">
             <h1 class="text-2xl font-bold ">Sign Up</h1>
             <UFormGroup label="Email" name="email" class="w-[15rem]">
-                <UInput v-model="state.email" />
+                <UInput v-model="state.email" autocomplete="username" />
             </UFormGroup>
-
             <UFormGroup label="Password" name="password" class="w-[15rem]">
-                <UInput v-model="state.password" type="password" />
+                <UInput v-model="state.password" type="password" autocomplete="current-password" />
             </UFormGroup>
-
             <UButton type="submit">
                 Sign Up
             </UButton>
